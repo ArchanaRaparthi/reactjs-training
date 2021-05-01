@@ -1,38 +1,67 @@
-import React from "react";
+import React, { useState , useEffect} from "react";
+import { signInWithGoogle } from "../../firebase";
+import { auth } from "../../firebase";
 
-class SignInPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-    };
-  }
+const SignInPage = () => {
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+  });
+  const [user, setUser] = useState(null);
 
-  submitHandler = (event) => {
+
+  const submitHandler = (event) => {
     console.log("preventing default");
     event.preventDefault();
-    this.setState({
+    setState({
       email: "",
       password: "",
     });
   };
 
-  render() {
-    return (
-      <div className="signin">
-        <h2>Have an account already?</h2>
-        <p>Sign in with yoour credentials</p>
-        <form onSubmit={this.submitHandler}>
-          <input name="email" value={this.state.email} required />
-          <label>Email</label>
-          <input name="password" value={this.state.password} required />
-          <label>Passsword</label>
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    const unsubscribeFromAuth = auth.onAuthStateChanged((user1) => {
+      setUser(user1);
+    });
+  }, []);
 
+  return (
+    <div className="signin-page">
+      <h2>Sign In</h2>
+
+      {user ? (
+        <div>
+          <div>
+            <img src={user.photoURL} alt="pic" />
+          </div>
+          <div>Name: {user.displayName}</div>
+          <div>Email: {user.email}</div>
+
+          <button onClick={() => auth.signOut()}>LOG OUT</button>
+        </div>
+      ) : (
+        <button onClick={signInWithGoogle}>SIGN IN WITH GOOGLE</button>
+      )}
+
+      <form onSubmit={submitHandler}>
+        <input
+          name="email"
+          type="email"
+          value={state.email}
+          placeholder="Email"
+          onChange={(e) => setState({ email: e.target.value })}
+          required
+        />
+        <input
+          name="password"
+          type="password"
+          value={state.password}
+          placeholder="Password"
+          onChange={(e) => setState({ password: e.target.value })}
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+};
 export default SignInPage;

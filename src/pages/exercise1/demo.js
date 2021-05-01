@@ -1,77 +1,59 @@
 import React from "react";
-import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import Header from "./header";
+import MenuItem from "./menu";
 import "./demo.scss";
+import Header from './header';
 
-const Demo = () => {
-  const sections = [
-    {
-      id: "1",
-      name: "A",
-      imageSource: "https://images.app.goo.gl/RcQaqZnaarWakrx86",
-    },
-    {
-      id: "2",
-      name: "B",
-      imageSource: "https://images.app.goo.gl/VDgjY12fErUiaL1o7",
-    },
-    {
-      id: "3",
-      name: "C",
-      imageSource: "https://images.app.goo.gl/VDgjY12fErUiaL1o7",
-    },
-    {
-      id: "4",
-      name: "D",
-      imageSource: "https://images.app.goo.gl/VDgjY12fErUiaL1o7",
-    },
-    {
-      id: "5",
-      name: "E",
-      imageSource: "https://images.app.goo.gl/VDgjY12fErUiaL1o7",
-    },
-    {
-      id: "6",
-      name: "F",
-      imageSource: "https://images.app.goo.gl/VDgjY12fErUiaL1o7",
-    },
-  ];
-
-  const Card = (props) => (
-    <div className="card">
-      <img className="card-img-top" src={props.imageSource} alt="img" />
-      <div className="card-body">
-        <h5 class="card-title">{props.name}</h5>
-        <button
-          type="button"
-          className="btn b stretched-link card-button"
-          href={props.id}
-        >
-          {props.id}
-        </button>
+class Directory extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      sections: [
+        {
+          imageUrl: "https://picsum.photos/200?random=1",
+          title: "A",
+          subtitle: "1",
+        },
+        {
+          imageUrl: "https://picsum.photos/200?random=1",
+          title: "B",
+          subtitle: "2",
+        },
+        {
+          imageUrl: "https://picsum.photos/200?random=1",
+          title: "C",
+          subtitle: "3",
+        },
+        {
+          imageUrl: "https://picsum.photos/200?random=1",
+          title: "D",
+          subtitle: "4",
+        },
+        {
+          imageUrl: "https://picsum.photos/200?random=1",
+          title: "E",
+          subtitle: "5",
+        },
+        {
+          imageUrl: "https://picsum.photos/200?random=1",
+          title: "F",
+          subtitle: "6",
+        },
+      ],
+    };
+  }
+  render() {
+    return (
+      <div className="directory-menu">
+        <Header />
+        {this.state.sections.map((section) => (
+          <MenuItem
+            title={section.title}
+            subtitle={section.subtitle}
+            imageUrl={section.imageUrl}
+          />
+        ))}
       </div>
-    </div>
-  );
-
-  let CardList = sections.map((section) => (
-    <Card
-      headerImage={section.imageSource}
-      id={section.id}
-      name={section.name}
-    ></Card>
-  ));
-
-  return (
-    <div className="container">
-      <Header />
-      {CardList[0]}
-      {CardList[1]}
-      {CardList[2]}
-      {CardList[3]}
-      {CardList[4]}
-      {CardList[5]}
-    </div>
-  );
-};
-
-export default Demo;
+    );
+  }
+}
+export default Directory;

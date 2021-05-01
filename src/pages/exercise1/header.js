@@ -1,23 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./header.scss";
-import { useState } from "react";
 
 const Header = () => {
-  const [toggle, setToggle] = useState("Sign In");
-  const handleToggle = () => {
-    setToggle("Sign Out");
-  };
   return (
-    <div className="header">
-      <img
-        src="https://www.nineleaps.com/wp-content/themes/nineleaps/assets/img/nineleaps-logo-footer.svg"
-        alt="Logo"
-        className="logo"
-      />
-      <button className="button" onClick={handleToggle}>
-        {toggle}
-      </button>
-    </div>
+        <div className="topnav">
+            <img
+              className="logo"
+              src="https://www.nineleaps.com/wp-content/themes/nineleaps/assets/img/nineleaps-logo-footer.svg"
+              alt="logo"
+            ></img>
+          <Link to="/signin">
+            <button className="nav-button">Sign in</button>
+          </Link>
+        </div>
   );
 };
 
